@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Pressable, PressableProps } from "react-native";
+import { Pressable, PressableProps, View } from "react-native";
 
 import Animated, {
   useSharedValue,
@@ -24,9 +24,7 @@ type Props = PressableProps & {
   type?: keyof typeof TYPE_COLORS;
 };
 
-const Wrapper = () => {
-  return;
-};
+const PressableAnimated = Animated.createAnimatedComponent(Pressable);
 
 export function Level({
   title,
@@ -70,24 +68,21 @@ export function Level({
   }, [isChecked]);
 
   return (
-    <Pressable
+    <PressableAnimated
       onPressIn={handleOnPresIn}
       onPressOut={handleOnPresOut}
+      style={[
+        styles.container,
+        animatedContainerStyle,
+        {
+          borderColor: COLOR,
+        },
+      ]}
       {...rest}
     >
-      <Animated.View
-        style={[
-          styles.container,
-          animatedContainerStyle,
-          {
-            borderColor: COLOR,
-          },
-        ]}
-      >
-        <Animated.Text style={[styles.title, animatedTextStyle]}>
-          {title}
-        </Animated.Text>
-      </Animated.View>
-    </Pressable>
+      <Animated.Text style={[styles.title, animatedTextStyle]}>
+        {title}
+      </Animated.Text>
+    </PressableAnimated>
   );
 }
