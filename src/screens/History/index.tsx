@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  Pressable,
-} from "react-native";
+import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 
 import { Swipeable } from "react-native-gesture-handler";
 
@@ -50,9 +44,12 @@ export function History() {
     fetchHistory();
   }
 
-  function handleRemove(id: string, refIndex: number) {
+  const handleRemove = (id: string, refIndex?: number) => () => {
     const confirmAction = () => remove(id);
-    const cancelAction = () => swipeableRefs.current[refIndex]?.close();
+
+    const cancelAction = () => {
+      if (refIndex !== undefined) swipeableRefs.current[refIndex].close();
+    };
 
     Alert.alert("Remover", "Deseja remover esse registro?", [
       {
@@ -65,7 +62,7 @@ export function History() {
         onPress: cancelAction,
       },
     ]);
-  }
+  };
 
   useEffect(() => {
     fetchHistory();
@@ -99,18 +96,17 @@ export function History() {
               ref={(ref) => ref && swipeableRefs.current.push(ref)}
               overshootLeft={false}
               containerStyle={styles.swipeableContainer}
+              onSwipeableOpen={handleRemove(item.id, index)}
+              renderRightActions={() => null}
               renderLeftActions={() => (
-                <Pressable
-                  style={styles.swipeableRemove}
-                  onPress={() => handleRemove(item.id, index)}
-                >
+                <View style={styles.swipeableRemove}>
                   <Trash size={32} color={THEME.COLORS.GREY_100} />
-                </Pressable>
+                </View>
               )}
             >
               <TouchableOpacity
                 activeOpacity={1}
-                onPress={() => handleRemove(item.id)}
+                onPress={handleRemove(item.id)}
               >
                 <HistoryCard data={item} />
               </TouchableOpacity>
