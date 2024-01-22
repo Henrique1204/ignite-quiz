@@ -15,7 +15,7 @@ type Props = {
   setAlternativeSelected?: (value: number) => void;
 };
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export function Question({
   question,
@@ -23,18 +23,28 @@ export function Question({
   setAlternativeSelected,
 }: Props) {
   const enteringKeyframes = new Keyframe({
-    0: { opacity: 0, transform: [{ translateX: SCREEN_WIDTH }, { rotate: '90deg' }] },
+    0: {
+      opacity: 0,
+      transform: [{ translateX: SCREEN_WIDTH }, { rotate: "90deg" }],
+    },
     70: { opacity: 0.3 },
-    100: { opacity: 1, transform: [{ translateX: 0 },  { rotate: '0deg' }] },
-  })
+    100: { opacity: 1, transform: [{ translateX: 0 }, { rotate: "0deg" }] },
+  });
 
   const exitingKeyframes = new Keyframe({
-    from: { opacity: 1, transform: [{ translateX: 0 }, { rotate: '0deg' }] },
-    to: { opacity: 0, transform: [{ translateX: -SCREEN_WIDTH },  { rotate: '-90deg' }] },
-  })
+    from: { opacity: 1, transform: [{ translateX: 0 }, { rotate: "0deg" }] },
+    to: {
+      opacity: 0,
+      transform: [{ translateX: -SCREEN_WIDTH }, { rotate: "-90deg" }],
+    },
+  });
 
   return (
-    <Animated.View entering={enteringKeyframes.duration(300).delay(100)} exiting={exitingKeyframes.duration(200)} style={styles.container}>
+    <Animated.View
+      entering={enteringKeyframes.duration(300).delay(100)}
+      exiting={exitingKeyframes.duration(200)}
+      style={styles.container}
+    >
       <Text style={styles.title}>{question.title}</Text>
 
       {question.alternatives.map((alternative, index) => (
