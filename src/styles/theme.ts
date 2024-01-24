@@ -14,6 +14,10 @@ export const THEME = {
     WARNING_LIGHT: "#FBA94C",
     DANGER_LIGHT: "#F75A68",
 
+    STAR_BLUE: "#57B6E5",
+    STAR_GREEN: "#00B37E",
+    STAR_GRAY: "#6F6F6F",
+
     LABEL: "#A6A1B2",
   },
   FONTS: {
