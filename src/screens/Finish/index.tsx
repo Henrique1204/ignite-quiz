@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import { useEffect } from "react";
+
+import { BackHandler, Text, View } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -17,6 +19,17 @@ export function Finish() {
   const { points, total } = route.params as Params;
 
   const { navigate } = useNavigation();
+
+  useEffect(() => {
+    const backHandlerListenner = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => null
+    );
+
+    return () => {
+      backHandlerListenner.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
